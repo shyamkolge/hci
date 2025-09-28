@@ -179,14 +179,26 @@ const product = {
   description:
     "A sleek and stylish jacket perfect for all seasons. Crafted with premium materials for maximum comfort and durability.",
   price: 2499,
-  colors: ["#f97316", "#ffffff", "#000000"],
+  colors: ["#FF0000", "#ffffff", "#000000"],
   sizes: ["S", "M", "L", "XL"],
   images: [
-    "/images/jacket1.jpg",
-    "/images/jacket2.jpg",
-    "/images/jacket3.jpg",
-    "/images/jacket4.jpg",
+    "https://assets.myntassets.com/h_720,q_90,w_540/v1/assets/images/2025/JUNE/17/XdVforSW_cfacd00a9a9c44c3a810862f0990453d.jpg",
+    "https://assets.myntassets.com/h_720,q_90,w_540/v1/assets/images/2025/JUNE/17/GEBzF7BU_975621c55b1345f085fcdc1494e05dc2.jpg",
+    "https://assets.myntassets.com/h_720,q_90,w_540/v1/assets/images/2025/JUNE/17/Ahf7N2lA_1df0bd8ed8db414a80c075e848e48fe5.jpg",
+    "https://assets.myntassets.com/h_720,q_90,w_540/v1/assets/images/2025/JUNE/17/TCSelt2V_b54b31f80bf4400c886476dedcd96116.jpg",
   ],
+  // Color-specific images for comparison
+  colorImages: {
+    "#FF0000": "https://assets.myntassets.com/h_720,q_90,w_540/v1/assets/images/2025/JUNE/17/XdVforSW_cfacd00a9a9c44c3a810862f0990453d.jpg",
+    "#ffffff": "https://assets.myntassets.com/h_720,q_90,w_540/v1/assets/images/14528020/2023/12/26/8fd99b1b-cf23-4dbd-adef-e94444cc05d81703584461571NikeMenCOURTVISIONSneakers1.jpg",
+    "#000000": "https://assets.myntassets.com/h_720,q_90,w_540/v1/assets/images/17206134/2023/12/13/88163f07-2c99-47c6-8f66-81e56cf77ba81702451322292NikeMenBlackCOURTLEGACYNNSneakers2.jpg",
+  },
+  // Color names for better display
+  colorNames: {
+    "#FF0000": "Red",
+    "#ffffff": "White", 
+    "#000000": "Black",
+  },
   details: "Made from 100% organic cotton. Machine washable. Imported.",
   reviews: [
     { name: "Amit", rating: 5, comment: "Amazing quality, fits perfectly!" },
@@ -216,7 +228,6 @@ export default function ProductPage() {
         : [...prev, color]
     );
   };
-  
 
   return (
     <>
@@ -350,135 +361,144 @@ export default function ProductPage() {
       </div>
 
       {/* Compare Colors Modal */}
-      {compareOpen && (
-        // <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
-        //   <div className="bg-white w-full max-w-4xl rounded-lg p-6 relative">
-        //     <button
-        //       onClick={() => setCompareOpen(false)}
-        //       className="absolute top-4 right-4 text-gray-500 hover:text-black"
-        //     >
-        //       <X className="w-6 h-6" />
-        //     </button>
-        //     <h2 className="text-2xl font-bold mb-4 text-orange-600">
-        //       Compare Colors
-        //     </h2>
+      {/* Compare Colors Modal */}
+{compareOpen && (
+  <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
+    <div className="bg-white w-full max-w-5xl rounded-xl p-6 relative shadow-lg">
+      {/* Close Button */}
+      <button
+        onClick={() => setCompareOpen(false)}
+        className="absolute top-4 right-4 text-gray-500 hover:text-black transition"
+      >
+        <X className="w-6 h-6" />
+      </button>
 
-        //     {/* Color checkboxes */}
-        //     <div className="flex gap-4 mb-6">
-        //       {product.colors.map((color) => (
-        //         <label key={color} className="flex items-center gap-2">
-        //           <input
-        //             type="checkbox"
-        //             checked={compareColors.includes(color)}
-        //             onChange={() => toggleCompareColor(color)}
-        //           />
-        //           <span
-        //             className="w-6 h-6 rounded-full border"
-        //             style={{ backgroundColor: color }}
-        //           ></span>
-        //         </label>
-        //       ))}
-        //     </div>
-
-        //     {/* Comparison images */}
-        //     {compareColors.length > 0 ? (
-        //       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        //         {compareColors.map((color, idx) => (
-        //           <div key={idx} className="text-center">
-        //             <img
-        //               src={product.images[idx % product.images.length]}
-        //               alt="Comparison"
-        //               className="w-full h-64 object-cover rounded-lg border"
-        //             />
-        //             <p className="mt-2">{color}</p>
-        //           </div>
-        //         ))}
-        //       </div>
-        //     ) : (
-        //       <p className="text-gray-500">Select colors to compare.</p>
-        //     )}
-        //   </div>
-        // </div>
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
-  <div className="bg-white w-full max-w-4xl rounded-lg p-6 relative">
-    <button
-      onClick={() => setCompareOpen(false)}
-      className="absolute top-4 right-4 text-gray-500 hover:text-black"
-    >
-      <X className="w-6 h-6" />
-    </button>
-
-    <h2 className="text-2xl font-bold mb-4 text-orange-600">
-      Compare Colors
-    </h2>
-
-    {/* Comparison images */}
-    {compareColors.length > 0 ? (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        {compareColors.map((color, idx) => (
-          <div key={idx} className="text-center">
-            {/* Slider for each color */}
-            <div className="relative w-full h-64 overflow-hidden rounded-lg border">
-              <div
-                className="flex transition-transform duration-500"
-                style={{
-                  transform: `translateX(-${sliderIndex[color] * 100}%)`,
-                  width: `${product.images.length * 100}%`
-                }}
-              >
-                {product.images.map((img, imgIdx) => (
-                  <img
-                    key={imgIdx}
-                    src={img}
-                    alt={`${color} view ${imgIdx + 1}`}
-                    className="w-full h-64 object-cover flex-shrink-0"
-                    style={{ width: "100%" }}
-                  />
-                ))}
-              </div>
-              {/* Prev Button */}
-              <button
-                onClick={() => prevSlide(color)}
-                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-1 shadow"
-              >
-                ◀
-              </button>
-              {/* Next Button */}
-              <button
-                onClick={() => nextSlide(color)}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-1 shadow"
-              >
-                ▶
-              </button>
-            </div>
-            <p className="mt-2 font-medium">{color}</p>
-          </div>
-        ))}
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold text-orange-600">
+          Compare Colors
+        </h2>
+        {compareColors.length > 0 && (
+          <button
+            onClick={() => setCompareColors([])}
+            className="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+          >
+            Clear All
+          </button>
+        )}
       </div>
-    ) : (
-      <p className="text-gray-500 mb-6">Select colors to compare.</p>
-    )}
 
-    {/* Color checkboxes BELOW images */}
-    <div className="flex gap-4 justify-center">
-      {product.colors.map((color) => (
-        <label key={color} className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={compareColors.includes(color)}
-            onChange={() => toggleCompareColor(color)}
-          />
-          <span
-            className="w-6 h-6 rounded-full border"
-            style={{ backgroundColor: color }}
-          ></span>
-        </label>
-      ))}
+      {compareColors.length > 0 ? (
+        <>
+          {/* Comparison images */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+            {compareColors.map((color, idx) => (
+              <div
+                key={idx}
+                className="text-center border rounded-lg p-3 shadow-sm hover:shadow-md transition"
+              >
+                <img
+                  src={product.colorImages[color as keyof typeof product.colorImages] || product.images[0]}
+                  alt={`Product in ${color}`}
+                  className="w-full h-64 object-cover rounded-lg border"
+                />
+                <div className="mt-3 flex items-center justify-center gap-2">
+                  <span
+                    className="w-6 h-6 rounded-full border-2 border-gray-300"
+                    style={{ backgroundColor: color }}
+                  ></span>
+                  <p className="font-medium text-gray-700">
+                    {product.colorNames[color as keyof typeof product.colorNames] || color}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Color checkboxes below images */}
+          <div className="flex flex-wrap justify-center gap-4 mb-6">
+            {product.colors.map((color) => (
+              <label
+                key={color}
+                className="flex items-center gap-2 cursor-pointer group"
+              >
+                <input
+                  type="checkbox"
+                  checked={compareColors.includes(color)}
+                  onChange={() => toggleCompareColor(color)}
+                  className="w-5 h-5 accent-orange-500"
+                />
+                <span
+                  className="w-7 h-7 rounded-full border shadow-sm group-hover:scale-110 transition"
+                  style={{ backgroundColor: color }}
+                ></span>
+                <span className="text-sm text-gray-600">
+                  {product.colorNames[color as keyof typeof product.colorNames] || color}
+                </span>
+              </label>
+            ))}
+          </div>
+
+          {/* Action buttons */}
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={() => setCompareOpen(false)}
+              className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+            >
+              Done
+            </button>
+            <button
+              onClick={() => setCompareColors([])}
+              className="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+            >
+              Clear All
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <p className="text-gray-500 text-center mb-6">
+            Select colors to compare. Choose up to 3 colors to see them side by side.
+          </p>
+
+          {/* Color checkboxes for empty state */}
+          <div className="flex flex-wrap justify-center gap-4 mb-6">
+            {product.colors.map((color) => (
+              <label
+                key={color}
+                className="flex items-center gap-2 cursor-pointer group"
+              >
+                <input
+                  type="checkbox"
+                  checked={compareColors.includes(color)}
+                  onChange={() => toggleCompareColor(color)}
+                  className="w-5 h-5 accent-orange-500"
+                />
+                <span
+                  className="w-7 h-7 rounded-full border shadow-sm group-hover:scale-110 transition"
+                  style={{ backgroundColor: color }}
+                ></span>
+                <span className="text-sm text-gray-600">
+                  {product.colorNames[color as keyof typeof product.colorNames] || color}
+                </span>
+              </label>
+            ))}
+          </div>
+
+          {/* Action buttons */}
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={() => setCompareOpen(false)}
+              className="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        </>
+      )}
     </div>
   </div>
-</div>
+)}
 
-      )}
     </>
   );
 }
